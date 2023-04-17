@@ -6,7 +6,7 @@ import streamlit as st
 import io
 from sklearn.neighbors import KNeighborsClassifier
 from catboost import CatBoostClassifier
-from sklearn.preprocessing import OneHotEncoder
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.compose import ColumnTransformer
 
 
@@ -284,7 +284,7 @@ def main () :
                         st.text([df1.columns.get_loc(col)for col in columns])
                         cat_features = [df1.columns.get_loc(col) for col in columns]
                         columnTransformer = ColumnTransformer([('encoder',
-                                            OneHotEncoder(),
+                                            OneHotEncoder(sparse=False),
                                             cat_features)],
                                         remainder='passthrough')
                     
@@ -566,7 +566,7 @@ def main () :
                     st.text([df1.columns.get_loc(col)for col in columns])
                     cat_features = [df1.columns.get_loc(col) for col in columns]
                     columnTransformer = ColumnTransformer([('encoder',
-                                        OneHotEncoder(),
+                                        OneHotEncoder(sparse=False),
                                         cat_features)],
                                       remainder='passthrough')
                     
@@ -585,8 +585,9 @@ def main () :
             
                     #standardize data
                     if st.checkbox("Do you want to standardize the data (RECOMMENDED)"):
-                        X_train = StandardScaler().fit_transform(X_train)
-                        X_test = StandardScaler().fit_transform(X_test)
+                        scaler = StandardScaler(with_mean=False)
+                        X_train = scaler.fit_transform(X_train)
+                        X_test = scaler.transform(X_test)
                     
                     #model
                     if st.checkbox("Train model "):
@@ -699,8 +700,9 @@ def main () :
             
                     #standardize data
                     if st.checkbox("Do you want to standardize the data (RECOMMENDED)"):
-                        X_train = StandardScaler().fit_transform(X_train)
-                        X_test = StandardScaler().fit_transform(X_test)
+                        scaler = StandardScaler(with_mean = False)
+                        X_train = scaler.fit_transform(X_train)
+                        X_test = scaler.transform(X_test)
                     
                     #model
                     if st.checkbox("Train model "):

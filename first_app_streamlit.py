@@ -4,6 +4,7 @@ from sklearn import datasets
 from PIL import Image
 import streamlit as st
 import io
+import seaborn as sns
 from sklearn.neighbors import KNeighborsClassifier
 from catboost import CatBoostClassifier
 from sklearn.preprocessing import OneHotEncoder, StandardScaler

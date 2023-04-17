@@ -1,4 +1,5 @@
 pyforest
+scikit-learn
 streamlit
 pillow
 catboost

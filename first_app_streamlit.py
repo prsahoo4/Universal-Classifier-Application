@@ -8,7 +8,10 @@ import seaborn as sns
 from sklearn.neighbors import KNeighborsClassifier
 from catboost import CatBoostClassifier
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
+from sklearn.model_selection import train_test_split
 from sklearn.compose import ColumnTransformer
+from sklearn import metrics
+
 
 
 #### Starting app
@@ -240,7 +243,10 @@ def main () :
                     columns = st.multiselect('Select columns to encode',df1.columns)
                     if classifier_name == 'Catboost':
                         st.text([df1.columns.get_loc(col)for col in columns])
-                        param['cat_features'] = [df1.columns.get_loc(col) for col in columns]
+                        if columns:
+                            param['cat_features'] = [df1.columns.get_loc(col) for col in columns]
+                        else:
+                            param['cat_features'] = None
                         # splitting df into x and y 
                         X = df1.drop(target_var,axis = 1)
                         y = df1[target_var]
@@ -522,7 +528,10 @@ def main () :
                 columns = st.multiselect('Select columns to encode',df1.columns)
                 if classifier_name == 'Catboost':
                     st.text([df1.columns.get_loc(col)for col in columns])
-                    param['cat_features'] = [df1.columns.get_loc(col) for col in columns]
+                    if columns:
+                        param['cat_features'] = [df1.columns.get_loc(col) for col in columns]
+                    else:
+                        param['cat_features'] = None
                     # splitting df into x and y 
                     X = df1.drop(target_var,axis = 1)
                     y = df1[target_var]
